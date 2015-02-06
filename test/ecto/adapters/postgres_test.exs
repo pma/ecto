@@ -7,7 +7,6 @@ defmodule Ecto.Adapters.PostgresTest do
   alias Ecto.Adapters.Postgres.Connection, as: SQL
 
   alias Ecto.Queryable
-  alias Ecto.Query.Planner
   alias Ecto.Migration.Table
   alias Ecto.Migration.Index
   alias Ecto.Migration.Reference
@@ -49,8 +48,8 @@ defmodule Ecto.Adapters.PostgresTest do
   end
 
   defp normalize(query) do
-    {query, _params} = Planner.prepare(query, %{})
-    Planner.normalize(query, %{}, [])
+    {query, _params, _cache} = Ecto.Query.Planner.prepare(query, %{})
+    Ecto.Query.Planner.normalize(query, %{}, [])
   end
 
   test "from" do
