@@ -65,7 +65,7 @@ defmodule Ecto.TestAdapter do
     do: {:ok, Enum.zip(return, 1..length(return))}
 
   # Notice the list of changes is never empty.
-  def update(_repo, _source, [_|_], _filters, _autogen, return, _opts),
+  def update(_repo, _source, _context, [_|_], _filters, _autogen, return, _opts),
     do: {:ok, Enum.zip(return, 1..length(return))}
 
   def delete(_repo, _source, _filter, _autogen, _opts),

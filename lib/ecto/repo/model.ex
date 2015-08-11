@@ -99,6 +99,7 @@ defmodule Ecto.Repo.Model do
     embeds   = model.__schema__(:embeds)
     assocs   = model.__schema__(:associations)
     {prefix, source} = struct.__meta__.source
+    context  = struct.__meta__.context
     return   = model.__schema__(:read_after_writes)
 
     # Differently from insert, update does not copy the struct
@@ -120,7 +121,7 @@ defmodule Ecto.Repo.Model do
         filters = add_pk_filter!(changeset.filters, struct)
         filters = Planner.fields(model, :update, filters, adapter)
 
-        args   = [repo, {prefix, source, model}, changes, filters, autogen, return, opts]
+        args   = [repo, {prefix, source, model}, context, changes, filters, autogen, return, opts]
         action = if changes == [], do: :noop, else: :update
         case apply(changeset, adapter, action, args) do
           {:ok, changeset} ->

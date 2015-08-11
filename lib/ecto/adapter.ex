@@ -8,6 +8,7 @@ defmodule Ecto.Adapter do
 
   @type t :: module
   @type source :: {prefix :: binary, table :: binary, model :: atom}
+  @type context :: term
   @type fields :: Keyword.t
   @type filters :: Keyword.t
   @type constraints :: Keyword.t
@@ -168,7 +169,7 @@ defmodule Ecto.Adapter do
   to a primary key that does not support assignment. In this case, `value`
   will be a non `nil` value.
   """
-  defcallback update(repo, source, fields, filters, autogenerate_id, returning, options) ::
+  defcallback update(repo, source, context, fields, filters, autogenerate_id, returning, options) ::
                     {:ok, Keyword.t} | {:invalid, constraints} |
                     {:error, :stale} | no_return
 
