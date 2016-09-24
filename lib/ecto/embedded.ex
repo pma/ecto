@@ -119,8 +119,10 @@ defmodule Ecto.Embedded do
     do: raise(ArgumentError, "got action :delete in changeset for embedded #{inspect schema} while inserting")
   defp check_action!(action, _, _), do: action
 
-  defp autogenerate_id(changes, _struct, :insert, schema, adapter) do
+  defp autogenerate_id(changes, struct, :insert, schema, adapter) do
     case schema.__schema__(:autogenerate_id) do
+      nil ->
+        autogenerate_id(changes, struct, :update, schema, adapter)
       {key, :binary_id} ->
         case Map.fetch(changes, key) do
           {:ok, _} ->
